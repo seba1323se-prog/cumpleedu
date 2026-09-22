@@ -1,0 +1,605 @@
+/* Estilos Principales - Tarjeta de Cumpleaños Interactiva Papá Profe */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@400;600;700&family=Fira+Code:wght@500;700&display=swap');
+
+:root {
+    --chalkboard-bg: #1c3329;
+    --chalkboard-dark: #12221b;
+    --chalk-white: #f7f9f8;
+    --chalk-yellow: #fff07c;
+    --chalk-pink: #ff85a1;
+    --chalk-blue: #70d6ff;
+    --chalk-green: #a8f0d9;
+    --wood-border: #5c3a21;
+    --wood-light: #805333;
+    --gold: #ffd700;
+    --card-bg: rgba(255, 255, 255, 0.95);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Fredoka', 'Caveat', sans-serif;
+    user-select: none;
+}
+
+body {
+    background: #0f1a15;
+    background-image: 
+        radial-gradient(circle at 50% 50%, rgba(30, 60, 48, 0.8), rgba(10, 20, 15, 0.98)),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%232a4d3e' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    overflow-x: hidden;
+    color: var(--chalk-white);
+}
+
+/* Fondo de símbolos matemáticos flotantes */
+#math-bg-symbols {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.floating-symbol {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.08);
+    font-family: 'Fira Code', monospace;
+    font-weight: bold;
+    animation: floatAround 18s infinite linear;
+}
+
+@keyframes floatAround {
+    0% {
+        transform: translateY(105vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.15;
+    }
+    90% {
+        opacity: 0.15;
+    }
+    100% {
+        transform: translateY(-10vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Canvas para Confeti */
+#confetti-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+/* Contenedor Principal Pizarra */
+.chalkboard-container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 900px;
+    background: var(--chalkboard-bg);
+    border: 16px solid var(--wood-border);
+    border-image: linear-gradient(to right, #422917, #6e4629, #422917) 1;
+    box-shadow: 
+        0 15px 35px rgba(0,0,0,0.6),
+        inset 0 0 50px rgba(0, 0, 0, 0.7);
+    border-radius: 12px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Cabecera Pizarra */
+.chalkboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px dashed rgba(255, 255, 255, 0.2);
+    padding-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.title-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.title-badge h1 {
+    font-family: 'Caveat', cursive;
+    font-size: 2.3rem;
+    color: var(--chalk-yellow);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    letter-spacing: 1px;
+}
+
+.audio-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid var(--chalk-blue);
+    color: var(--chalk-blue);
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.audio-btn:hover {
+    background: var(--chalk-blue);
+    color: var(--chalkboard-dark);
+    box-shadow: 0 0 12px var(--chalk-blue);
+}
+
+/* Barra de Progreso */
+.progress-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: var(--chalk-green);
+    font-weight: 600;
+}
+
+.progress-bar-bg {
+    width: 100%;
+    height: 14px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #70d6ff, #a8f0d9, #fff07c);
+    border-radius: 10px;
+    transition: width 0.5s ease-in-out;
+}
+
+/* Layout del Juego: Imagen Profe + Pizarra del Problema */
+.game-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 25px;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .game-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Contenedor del Avatar Profe */
+.profe-avatar-card {
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+}
+
+.profe-img-wrapper {
+    width: 100%;
+    max-width: 240px;
+    aspect-ratio: 4/3;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 3px solid var(--chalk-yellow);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    background: #111;
+}
+
+.profe-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.profe-img-wrapper:hover img {
+    transform: scale(1.05);
+}
+
+.profe-dialog-bubble {
+    background: #fff07c;
+    color: #1c3329;
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    position: relative;
+    width: 100%;
+}
+
+.profe-dialog-bubble::after {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 0 8px 8px 8px;
+    border-style: solid;
+    border-color: transparent transparent #fff07c transparent;
+}
+
+/* Sección de la Pregunta / Ejercicio */
+.problem-card {
+    background: rgba(0, 0, 0, 0.35);
+    border: 2px dashed rgba(255, 255, 255, 0.25);
+    border-radius: 16px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.level-tag {
+    align-self: flex-start;
+    background: var(--chalk-pink);
+    color: #12221b;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.problem-statement {
+    font-family: 'Caveat', cursive;
+    font-size: 1.8rem;
+    color: var(--chalk-white);
+    line-height: 1.3;
+}
+
+.math-formula-box {
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid var(--chalk-yellow);
+    border-radius: 12px;
+    padding: 15px 20px;
+    text-align: center;
+    font-family: 'Fira Code', monospace;
+    font-size: 2rem;
+    color: var(--chalk-yellow);
+    text-shadow: 0 0 10px rgba(255, 240, 124, 0.4);
+    letter-spacing: 2px;
+}
+
+/* Formulario de Respuesta */
+.answer-form {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.answer-input {
+    flex: 1;
+    min-width: 160px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid var(--chalk-green);
+    border-radius: 12px;
+    padding: 12px 18px;
+    font-family: 'Fira Code', monospace;
+    font-size: 1.4rem;
+    color: var(--chalk-white);
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.answer-input:focus {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: var(--chalk-yellow);
+    box-shadow: 0 0 12px rgba(255, 240, 124, 0.3);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #70d6ff, #3a86ff);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 16px rgba(58, 134, 255, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(58, 134, 255, 0.6);
+}
+
+.btn-primary:active {
+    transform: translateY(1px);
+}
+
+.btn-hint {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px dashed var(--chalk-yellow);
+    color: var(--chalk-yellow);
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-hint:hover {
+    background: rgba(255, 240, 124, 0.15);
+}
+
+/* Mensaje de Feedback */
+.feedback-box {
+    display: none;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    animation: fadeIn 0.3s ease;
+}
+
+.feedback-box.error {
+    display: block;
+    background: rgba(255, 107, 107, 0.2);
+    border: 1px solid #ff6b6b;
+    color: #ff8585;
+}
+
+.feedback-box.hint {
+    display: block;
+    background: rgba(255, 240, 124, 0.15);
+    border: 1px solid var(--chalk-yellow);
+    color: var(--chalk-yellow);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5deg); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Modal de Premio / Mensaje Bonito */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(6px);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.reward-card-modal {
+    background: #fff;
+    color: #222;
+    border-radius: 24px;
+    max-width: 550px;
+    width: 100%;
+    padding: 30px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(255, 215, 0, 0.4);
+    transform: scale(0.8) translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    text-align: center;
+    border: 4px solid var(--gold);
+}
+
+.modal-overlay.active .reward-card-modal {
+    transform: scale(1) translateY(0);
+}
+
+.modal-header-icon {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.modal-title {
+    font-family: 'Caveat', cursive;
+    font-size: 2.2rem;
+    color: #1c3329;
+    margin-bottom: 15px;
+}
+
+.modal-img-container {
+    width: 100%;
+    max-height: 220px;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    border: 3px solid #ff85a1;
+}
+
+.modal-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.reward-message-text {
+    font-family: 'Caveat', cursive;
+    font-size: 1.6rem;
+    line-height: 1.4;
+    color: #333;
+    background: #fff8e7;
+    border-left: 4px solid var(--gold);
+    padding: 15px 20px;
+    border-radius: 8px;
+    text-align: left;
+    margin-bottom: 25px;
+}
+
+.btn-next-level {
+    background: linear-gradient(135deg, #ff85a1, #ff3366);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 14px 32px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(255, 51, 102, 0.4);
+    transition: all 0.3s ease;
+}
+
+.btn-next-level:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(255, 51, 102, 0.6);
+}
+
+/* Pantalla Final - Gran Homenaje */
+.final-screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 25px;
+    padding: 20px 10px;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+.final-screen.active {
+    display: flex;
+}
+
+.certificate-card {
+    background: linear-gradient(135deg, #fffef0, #fff7d6);
+    color: #2c1a0e;
+    border: 10px solid var(--gold);
+    outline: 3px dashed #b8860b;
+    outline-offset: -8px;
+    border-radius: 20px;
+    padding: 35px 25px;
+    width: 100%;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+    position: relative;
+}
+
+.certificate-badge {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gold);
+    color: #4a2c00;
+    padding: 6px 24px;
+    border-radius: 20px;
+    font-weight: 800;
+    font-size: 1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.final-img-box {
+    width: 100%;
+    max-width: 480px;
+    margin: 15px auto;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 4px solid var(--gold);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.final-img-box img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.certificate-title {
+    font-family: 'Caveat', cursive;
+    font-size: 3rem;
+    color: #5c3a21;
+    margin-top: 10px;
+}
+
+.certificate-sub {
+    font-size: 1.2rem;
+    color: #784c28;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.final-message-body {
+    font-family: 'Caveat', cursive;
+    font-size: 1.7rem;
+    line-height: 1.5;
+    color: #2c1a0e;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.signature-line {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 2px dashed #b8860b;
+    padding-top: 15px;
+    font-family: 'Caveat', cursive;
+    font-size: 1.4rem;
+}
+
+.restart-btn {
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid var(--chalk-green);
+    color: var(--chalk-green);
+    padding: 10px 24px;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.restart-btn:hover {
+    background: var(--chalk-green);
+    color: var(--chalkboard-dark);
+}

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Feliz Cumpleaños, Papá Profe! 🎓➕🎉</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- Fondo de Símbolos Matemáticos -->
+    <div id="math-bg-symbols"></div>
+
+    <!-- Canvas para Confeti -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- Pizarra Principal del Juego -->
+    <main class="chalkboard-container">
+        
+        <!-- Cabecera -->
+        <header class="chalkboard-header">
+            <div class="title-badge">
+                <span>🎓</span>
+                <h1>Math Quest: Edición Papá Profe</h1>
+            </div>
+            <button id="audio-toggle-btn" class="audio-btn" type="button">
+                🔊 Sonido: ON
+            </button>
+        </header>
+
+        <!-- Sección de Progreso -->
+        <section id="progress-section" class="progress-section">
+            <div class="progress-header">
+                <span>Desafíos Matemáticos de Cumpleaños</span>
+                <span id="progress-text">Nivel 1 de 5</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div id="progress-bar-fill" class="progress-bar-fill"></div>
+            </div>
+        </section>
+
+        <!-- Área de Juego (Layout 2 Columnas) -->
+        <div id="game-play-area" class="game-layout">
+            
+            <!-- Columna Izquierda: Avatar Profe -->
+            <div class="profe-avatar-card">
+                <div class="profe-img-wrapper">
+                    <img id="profe-img" src="assets/images/einstein_writing.png" alt="Profesor Einstein evaluando el ejercicio">
+                </div>
+                <div id="profe-dialog" class="profe-dialog-bubble">
+                    ¡Profe listo a la pizarra! Resuelve el ejercicio.
+                </div>
+            </div>
+
+            <!-- Columna Derecha: Tarjeta del Problema -->
+            <div class="problem-card">
+                <span id="level-tag" class="level-tag">Nivel 1: Suma de Cariño</span>
+
+                <p id="problem-statement" class="problem-statement">
+                    Un examen rápido para entrar en calor, Profe. Si sumamos tu infinita paciencia (50) más tu inmenso amor por la familia (50), ¿cuál es el porcentaje exacto de orgullo que sentimos por ti?
+                </p>
+
+                <!-- Caja de Fórmula Matemática -->
+                <div id="math-formula-box" class="math-formula-box">
+                    50 + 50 = ?
+                </div>
+
+                <!-- Formulario de Respuesta -->
+                <form id="answer-form" class="answer-form">
+                    <input type="text" id="user-answer" class="answer-input" placeholder="Tu respuesta aquí..." autocomplete="off">
+                    <button type="submit" class="btn-primary">
+                        <span>✔ Evaluar</span>
+                    </button>
+                    <button type="button" id="btn-hint" class="btn-hint">
+                        💡 Pedir Pista
+                    </button>
+                </form>
+
+                <!-- Caja de Feedback / Pistas -->
+                <div id="feedback-box" class="feedback-box"></div>
+            </div>
+        </div>
+
+        <!-- Pantalla Final - Gran Homenaje -->
+        <div id="final-screen" class="final-screen">
+            <div class="certificate-card">
+                <div class="certificate-badge">🏆 HONOR AL MEJOR PROFE Y PAPÁ 🏆</div>
+
+                <!-- Imagen Final con el libro de Einstein -->
+                <div class="final-img-box">
+                    <img src="assets/images/einstein_final.png" alt="¡Feliz Cumpleaños, Papá! Tu ingenio es mi mayor inspiración.">
+                </div>
+
+                <h2 class="certificate-title">¡Certificado de Orgullo Infinito!</h2>
+                <p class="certificate-sub">Otorgado al Profesor de Matemáticas más sabio, paciente y cariñoso del mundo.</p>
+
+                <div class="final-message-body">
+                    <p>¡Querido Papá!</p>
+                    <p>Hoy celebramos no solo tus años de vida, sino cada una de las enseñanzas que nos regalas a diario. Gracias por enseñarme a pensar con lógica, a resolver los problemas con calma y a nunca rendirme ante las ecuaciones de la vida.</p>
+                    <br>
+                    <p><strong>\(\lim_{t \to \infty} (\text{Amor por ti}) = \infty\)</strong></p>
+                    <p>¡Que tengas un maravilloso y feliz cumpleaños!</p>
+                </div>
+
+                <div class="signature-line">
+                    <span>Con todo mi cariño y admiración ❤️</span>
+                    <span>Tu Hijo/a 🎓</span>
+                </div>
+            </div>
+
+            <button id="restart-btn" class="restart-btn" type="button">
+                🔄 Jugar de Nuevo
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Modal de Premio (Mensaje Bonito por Nivel) -->
+    <div id="reward-modal" class="modal-overlay">
+        <div class="reward-card-modal">
+            <div class="modal-header-icon">🎉</div>
+            <h2 id="modal-title" class="modal-title">¡Demostración Impecable!</h2>
+
+            <div class="modal-img-container">
+                <img id="modal-profe-img" src="assets/images/einstein_idea.png" alt="Profesor Einstein celebrando respuesta correcta">
+            </div>
+
+            <p id="reward-message-text" class="reward-message-text">
+                Sumando todos los días de mi vida a tu lado, me doy cuenta de lo afortunado que soy de tenerte como papá.
+            </p>
+
+            <button id="btn-next-level" class="btn-next-level" type="button">
+                Siguiente Desafío ➔
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/sound.js"></script>
+    <script src="js/confetti.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>
