@@ -54,7 +54,7 @@ const levels = [
         imgThinking: "assets/images/einstein_thinking.png",
         imgIdea: "assets/images/einstein_idea.png",
         rewardTitle: "¡Incógnita Resuelta! 🔍",
-        rewardMessage: "Resolver la incógnita de la felicidad siempre fue fácil desde que nací: ¡la respuesta siempre has sido tú, Papá! Tu sabiduría es nuestro mayor pilar."
+        rewardMessage: "Encontrar la respuesta a la ecuación de la felicidad es muy fácil: ¡el resultado exacto siempre has sido tú, Papá! Tu sabiduría, paciencia y ejemplo son nuestro mayor pilar."
     },
     {
         id: 5,
@@ -89,15 +89,18 @@ document.addEventListener('DOMContentLoaded', () => {
 // Generar símbolos matemáticos flotantes en el fondo
 function initFloatingSymbols() {
     const container = document.getElementById('math-bg-symbols');
+    container.innerHTML = '';
     const symbols = ['π', '∑', '∫', '∞', '√', 'α', 'β', 'f(x)', '∆', '∈', 'θ', 'λ', 'Q.E.D.'];
     
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < 30; i++) {
         const span = document.createElement('span');
         span.className = 'floating-symbol';
         span.innerText = symbols[Math.floor(Math.random() * symbols.length)];
-        span.style.left = `${Math.random() * 95}vw`;
-        span.style.animationDelay = `${Math.random() * 15}s`;
-        span.style.fontSize = `${Math.random() * 1.5 + 1}rem`;
+        span.style.left = `${Math.random() * 92}vw`;
+        span.style.top = `${Math.random() * 88 + 5}vh`;
+        span.style.animationDelay = `${(Math.random() * -20).toFixed(2)}s`;
+        span.style.animationDuration = `${(Math.random() * 10 + 15).toFixed(2)}s`;
+        span.style.fontSize = `${(Math.random() * 1.2 + 1).toFixed(2)}rem`;
         container.appendChild(span);
     }
 }
