@@ -608,3 +608,258 @@ body {
     background: var(--chalk-green);
     color: var(--chalkboard-dark);
 }
+
+/* Media Queries para Dispositivos Móviles y Tablets */
+@media (max-width: 768px) {
+    body {
+        padding: 8px 4px;
+        align-items: flex-start;
+    }
+
+    .chalkboard-container {
+        padding: 14px 10px;
+        border-width: 8px;
+        border-radius: 10px;
+        gap: 12px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .chalkboard-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 10px;
+        gap: 8px;
+    }
+
+    .title-badge h1 {
+        font-size: 1.45rem;
+        letter-spacing: 0.5px;
+    }
+
+    .audio-btn {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+        border-radius: 14px;
+    }
+
+    .progress-section {
+        gap: 4px;
+    }
+
+    .progress-header {
+        font-size: 0.8rem;
+    }
+
+    .progress-bar-bg {
+        height: 10px;
+    }
+
+    .game-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+    }
+
+    /* Avatar del Profe Compacto en Celular */
+    .profe-avatar-card {
+        padding: 8px 12px;
+        flex-direction: row;
+        gap: 12px;
+        align-items: center;
+        text-align: left;
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 12px;
+        width: 100%;
+    }
+
+    .profe-img-wrapper {
+        width: 85px;
+        min-width: 85px;
+        height: 85px;
+        aspect-ratio: 1/1;
+        border-radius: 10px;
+        border-width: 2px;
+        flex-shrink: 0;
+    }
+
+    .profe-img-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .profe-dialog-bubble {
+        font-size: 0.85rem;
+        padding: 8px 12px;
+        line-height: 1.25;
+        width: 100%;
+    }
+
+    .profe-dialog-bubble::after {
+        top: 50%;
+        left: -8px;
+        transform: translateY(-50%);
+        border-width: 6px 8px 6px 0;
+        border-color: transparent #fff07c transparent transparent;
+    }
+
+    .problem-card {
+        padding: 14px 10px;
+        gap: 12px;
+        border-radius: 12px;
+        width: 100%;
+    }
+
+    .level-tag {
+        font-size: 0.75rem;
+        padding: 3px 10px;
+        border-radius: 8px;
+    }
+
+    .problem-statement {
+        font-size: 1.3rem;
+        line-height: 1.25;
+    }
+
+    .math-formula-box {
+        font-size: 1.3rem;
+        padding: 10px;
+        border-radius: 10px;
+        letter-spacing: 1px;
+        word-break: break-word;
+        overflow-x: auto;
+    }
+
+    .answer-form {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .answer-input {
+        width: 100%;
+        font-size: 1.2rem;
+        padding: 12px;
+        text-align: center;
+        border-radius: 10px;
+        min-height: 46px;
+    }
+
+    .answer-input::placeholder {
+        font-size: 0.95rem;
+    }
+
+    .btn-primary, .btn-hint {
+        width: 100%;
+        justify-content: center;
+        padding: 12px;
+        font-size: 1rem;
+        border-radius: 10px;
+        min-height: 46px;
+    }
+
+    /* Modales en Celulares */
+    .modal-overlay {
+        padding: 10px;
+    }
+
+    .reward-card-modal {
+        padding: 18px 12px;
+        max-width: 95vw;
+        border-radius: 16px;
+        border-width: 3px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .modal-header-icon {
+        font-size: 2.2rem;
+        margin-bottom: 4px;
+    }
+
+    .modal-title {
+        font-size: 1.5rem;
+        margin-bottom: 8px;
+    }
+
+    .modal-img-container {
+        max-height: 150px;
+        border-radius: 10px;
+        margin-bottom: 12px;
+    }
+
+    .reward-message-text {
+        font-size: 1.15rem;
+        padding: 10px 12px;
+        margin-bottom: 15px;
+        line-height: 1.3;
+    }
+
+    .btn-next-level {
+        padding: 12px 20px;
+        font-size: 1rem;
+        width: 100%;
+        border-radius: 20px;
+    }
+
+    /* Certificado Final en Celular */
+    .certificate-card {
+        padding: 22px 10px;
+        border-width: 6px;
+        border-radius: 14px;
+    }
+
+    .certificate-badge {
+        font-size: 0.72rem;
+        padding: 4px 10px;
+        top: -16px;
+        white-space: nowrap;
+    }
+
+    .final-img-box {
+        max-width: 100%;
+        border-radius: 10px;
+        margin: 10px auto;
+        border-width: 3px;
+    }
+
+    .certificate-title {
+        font-size: 1.9rem;
+    }
+
+    .certificate-sub {
+        font-size: 0.95rem;
+        margin-bottom: 10px;
+    }
+
+    .final-message-body {
+        font-size: 1.2rem;
+        line-height: 1.35;
+        margin: 10px 0;
+    }
+
+    .final-math-formula {
+        font-size: 1.15rem;
+        margin: 8px 0;
+        word-break: break-word;
+    }
+
+    .signature-line {
+        flex-direction: column;
+        gap: 8px;
+        font-size: 1.15rem;
+        text-align: center;
+        margin-top: 15px;
+        padding-top: 12px;
+    }
+
+    .restart-btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+        border-radius: 16px;
+    }
+}
